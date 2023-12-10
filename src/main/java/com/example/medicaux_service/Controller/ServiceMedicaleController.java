@@ -13,13 +13,13 @@ import org.springframework.web.bind.annotation.*;
 public class ServiceMedicaleController {
 
     private final ServiceMedicaleServices medicaleServices;
-@PostMapping(path = "/add")
-    public ResponseEntity<?> ajouterService(@RequestBody ServiceMedicale serviceMedicale){
+
+    @PostMapping(path = "/add")
+    public ResponseEntity<?> ajouterService(@RequestBody ServiceMedicale serviceMedicale) {
         try {
             return new ResponseEntity<>(medicaleServices.addFoyer(serviceMedicale), HttpStatus.CREATED);
-        }
-        catch (Exception exception){
-            return new ResponseEntity<>(exception.getMessage(),HttpStatus.NOT_FOUND);
+        } catch (Exception exception) {
+            return new ResponseEntity<>(exception.getMessage(), HttpStatus.NOT_FOUND);
         }
     }
 
@@ -28,12 +28,19 @@ public class ServiceMedicaleController {
         try {
             ServiceMedicale blocUpdating = medicaleServices.updateServiceMedicale(serviceMedicale);
             return new ResponseEntity<>(blocUpdating, HttpStatus.OK);
-        }
-
-          catch (Exception e) {
-              return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+        } catch (Exception e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
         }
     }
 
+    @GetMapping(path = "/get/service/{id}")
+    public ResponseEntity<?> getFoyerById(@PathVariable("id") long idService) throws Exception {
+        try {
+            ServiceMedicale serviceMedicale = medicaleServices.getById(idService);
+            return ResponseEntity.ok(serviceMedicale);
+        } catch (Exception exp) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(exp.getMessage());
+        }
 
+    }
 }

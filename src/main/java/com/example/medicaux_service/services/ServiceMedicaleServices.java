@@ -18,6 +18,13 @@ private final IServiceMedicoRepository serviceMedicoRepository;
     }
 
     @Override
+    public ServiceMedicale getById(long idService) throws Exception {
+        ServiceMedicale ServiceById = serviceMedicoRepository.findById(idService)
+                .orElseThrow(() -> new Exception("foyer introuvable avec l'id : " + idService));
+        return ServiceById;
+    }
+
+    @Override
     public ServiceMedicale updateServiceMedicale(ServiceMedicale serviceMedicale) throws Exception {
         Optional<ServiceMedicale> isHere = serviceMedicoRepository.findById(serviceMedicale.getIdServiceMedicale());
         if (isHere.isPresent()) {
