@@ -58,4 +58,16 @@ public class ServiceMedicaleController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("une chose mal passé");
         }
     }
+
+    @DeleteMapping(path = "/supprimer/Service/{id}")
+    public ResponseEntity<String> SupprimerServiceMedicale(@PathVariable("id") long idServiceMedoicale) {
+        try {
+            medicaleServices.removeService(idServiceMedoicale);
+            return ResponseEntity.ok("Services deleted Successfuly");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        }
+
+
+    }
 }

@@ -32,6 +32,17 @@ private final IServiceMedicoRepository serviceMedicoRepository;
     }
 
     @Override
+    public void removeService(long idService) throws Exception {
+        Optional<ServiceMedicale> ServiceToDeletedExisting = serviceMedicoRepository.findById(idService);
+        if (ServiceToDeletedExisting.isPresent()) {
+            serviceMedicoRepository.deleteById(idService);
+        } else {
+            throw new Exception("foyer non trouve avec id " + idService);
+        }
+    }
+
+
+    @Override
     public ServiceMedicale updateServiceMedicale(ServiceMedicale serviceMedicale) throws Exception {
         Optional<ServiceMedicale> isHere = serviceMedicoRepository.findById(serviceMedicale.getIdServiceMedicale());
         if (isHere.isPresent()) {
