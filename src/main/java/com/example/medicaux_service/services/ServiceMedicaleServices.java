@@ -5,6 +5,7 @@ import com.example.medicaux_service.Repository.IServiceMedicoRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -22,6 +23,12 @@ private final IServiceMedicoRepository serviceMedicoRepository;
         ServiceMedicale ServiceById = serviceMedicoRepository.findById(idService)
                 .orElseThrow(() -> new Exception("foyer introuvable avec l'id : " + idService));
         return ServiceById;
+    }
+
+    @Override
+    public List<ServiceMedicale> retrieveAllServices() {
+        List<ServiceMedicale> Services = (List<ServiceMedicale>) serviceMedicoRepository.findAll();
+        return Services;
     }
 
     @Override

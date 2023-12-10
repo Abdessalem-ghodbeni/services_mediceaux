@@ -7,6 +7,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/serviceMedicale")
 @RequiredArgsConstructor
@@ -42,5 +44,18 @@ public class ServiceMedicaleController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(exp.getMessage());
         }
 
+    }
+
+    @GetMapping(path = "all/services")
+    public ResponseEntity<?> GetALLUniversity() {
+        try {
+            List<ServiceMedicale> serviceMedicaleList = medicaleServices.retrieveAllServices();
+            if (serviceMedicaleList.isEmpty()) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("la liste des services est vide ");
+            }
+            return ResponseEntity.ok(serviceMedicaleList);
+        } catch (Exception exception) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("une chose mal passé");
+        }
     }
 }
